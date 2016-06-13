@@ -16,7 +16,7 @@
 using namespace std;
 
 
-int handle_WRQ(int conn, char *buf, int buf_size, struct sockaddr_in *client)
+int clientWRQ(int conn, char *buf, int buf_size, struct sockaddr_in *client)
 {
     struct timeval timeout;
     fd_set rfds;
@@ -90,8 +90,7 @@ int handle_WRQ(int conn, char *buf, int buf_size, struct sockaddr_in *client)
                 FD_ZERO(&rfds);
                 FD_SET(conn, &rfds);
                 retval = select(conn+1, &rfds, NULL, NULL, &timeout);
-                if (retval == -1) { // if select() failed
-                    // TODO: perhaps we should continue with the loop..
+                if (retval == -1) { // if select() timed out
                     fclose(output);
                     perror("TTFTP_ERROR");
                     return 0;
@@ -268,7 +267,7 @@ int main(int argc, const char * argv[])
         }
         opcode = ntohs(*(uint16_t*)buf);
         if (opcode == OP_WRQ) {
-            if (handle_WRQ(sock, buf, recv_len, &peer_addr)) {
+            if (clientWRQ(sock, buf, recv_len, &peer_addr)) {
             	cout << "RECVOK" << endl;
             } else {
             	cout << "RECVFAIL" << endl;
