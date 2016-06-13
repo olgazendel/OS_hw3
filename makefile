@@ -7,9 +7,9 @@ RM = rm -f
 
 
 
-all: ttftp
+all: ttftps
 
-ttftp: $(OBJS)
+ttftps: $(OBJS)
 	$(CC) -o ttftp $(OBJS)
 
 tftp_server.o: tftp_server.cpp tftp_server.h
