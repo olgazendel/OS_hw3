@@ -16,4 +16,4 @@ tftp_server.o: tftp_server.cpp tftp_server.h
 	$(CC) $(CFLAGS) -o $@ tftp_server.cpp
 
 clean:
-	rm -f ttftp *.o *~
+	rm -f ttftp *.o *~ ttftps
